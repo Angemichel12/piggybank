@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Currency, Category, Transaction
 from django.contrib.auth.models import User
+from .reports import ReportParms
 
 
 class ReodOnlyUserSerializer(serializers.ModelSerializer):
@@ -47,3 +48,12 @@ class ReportEntrySerializer(serializers.Serializer):
     total = serializers.DecimalField(max_digits=15, decimal_places=2)
     count = serializers.IntegerField()
     avg = serializers.DecimalField(max_digits=15, decimal_places=2)
+
+
+class ReportParamsSerializer(serializers.Serializer):
+    start_date = serializers.DateTimeField()
+    end_date = serializers.DateTimeField()
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    def create(self, validated_data):
+        return ReportParms(**validated_data)
