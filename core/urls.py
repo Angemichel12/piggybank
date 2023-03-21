@@ -3,7 +3,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from .views import(CurrencyListAPIView, 
                    CategoryModelViewSet,
-                   TransactionModelViewSet) 
+                   TransactionModelViewSet,
+                   TransactionReportAPIView) 
 from rest_framework import routers
 
 router = routers.SimpleRouter()
@@ -12,5 +13,6 @@ router.register(r'transactions', TransactionModelViewSet, basename='transaction'
 
 urlpatterns = [
     path('login/', obtain_auth_token, name='obtain-auth-token'),
-    path('currencies/', CurrencyListAPIView.as_view())
+    path('currencies/', CurrencyListAPIView.as_view()),
+    path('report/', TransactionReportAPIView.as_view())
 ]+router.urls

@@ -2,10 +2,19 @@ from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from .models import Currency, Category, Transaction
-from .serializers import CurrencySerializer, CategorySerializer,  WriteTransactionSerializer, ReadTransactionSerializer
+from .serializers import (CurrencySerializer, 
+                          CategorySerializer,  
+                          WriteTransactionSerializer, 
+                          ReadTransactionSerializer,
+                          ReportEntrySerializer)
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import permissions
+from rest_framework.views import APIView
+from .reports import transactions_reports
+from rest_framework.response import Response
+
+
 
 class CurrencyListAPIView(generics.ListAPIView):
     queryset = Currency.objects.all()
@@ -32,3 +41,9 @@ class TransactionModelViewSet(viewsets.ModelViewSet):
         if self.action in ('list', 'retrieve'):
             return ReadTransactionSerializer
         return WriteTransactionSerializer
+class TransactionReportAPIView(APIView):
+    def get(self, request):
+        data = transactions_reports()
+        serializer = ReportEntrySerializer(instance=data, many=True).data
+        return Response(data=serializer)
+

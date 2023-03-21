@@ -39,3 +39,11 @@ class ReadTransactionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
         read_only_fields = tuple(fields)
+
+
+
+class ReportEntrySerializer(serializers.Serializer):
+    category = CategorySerializer()
+    total = serializers.DecimalField(max_digits=15, decimal_places=2)
+    count = serializers.IntegerField()
+    avg = serializers.DecimalField(max_digits=15, decimal_places=2)
