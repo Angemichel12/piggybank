@@ -14,11 +14,12 @@ from rest_framework import permissions
 from rest_framework.views import APIView
 from .reports import transactions_reports
 from rest_framework.response import Response
+from .permissions import IsAdminOrReadOnyl
 
 
 
 class CurrencyModelViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnyl,)
     queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
     pegination_class = None
