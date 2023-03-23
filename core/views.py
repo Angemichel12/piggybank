@@ -17,7 +17,8 @@ from rest_framework.response import Response
 
 
 
-class CurrencyListAPIView(generics.ListAPIView):
+class CurrencyModelViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
     pegination_class = None
